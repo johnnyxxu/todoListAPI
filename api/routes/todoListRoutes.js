@@ -1,4 +1,4 @@
-
+'use strict';
 module.exports = function(app) {
   var todoList = require('../controllers/todoListController');
 
@@ -10,5 +10,12 @@ module.exports = function(app) {
     .get(todoList.get_a_task)
     .put(todoList.update_a_task)
     .delete(todoList.delete_a_task);
-    
+
+  app.route('/api/1.0/current-time')
+    .get(todoList.get_current_time);
+
+  app.route('/api/1.0/users')
+    .get(todoList.list_all_users)
+    .post(todoList.create_a_user);
+
 };

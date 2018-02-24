@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
-var taskSchema = new Schema({
+var taskSchema = new schema({
     name: {
       type: String,
       required: 'Enter name of the task please'
@@ -21,4 +21,4 @@ var taskSchema = new Schema({
       default: ['pending']
     }
 });
-module.exports = mongoose.model('Tasks', taskSchema);
+module.exports = mongoose.model('Task', taskSchema);

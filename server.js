@@ -2,7 +2,8 @@ var express = require('express'),
   app = express(),
   port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
-var Task = require('./api/models/todoListModel');
+var Task = require('./api/models/task');
+var User = require('./api/models/user');
 var bodyParser = require('body-parser');
 
 // mongoose instance connection url connection
@@ -13,9 +14,14 @@ mongoose.connect('mongodb://localhost/Tododb');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 var routes = require('./api/routes/todoListRoutes'); //importing route
 routes(app); //register the route
+
+app.use(function(req, res) {
+  res.status(404).send({
+    url: req.originalUrl + ' not found'
+  })
+});
 
 app.listen(port);
 

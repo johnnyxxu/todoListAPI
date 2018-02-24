@@ -1,6 +1,30 @@
-
+'use strict';
 var mongoose = require('mongoose');
-var Task = mongoose.model('Tasks');
+var async = require('async');
+var Task = mongoose.model('Task');
+var User = mongoose.model('User');
+
+exports.list_all_users = function(req, res) {
+  debugger
+  User.find({}, function(err, user) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(user);
+    }
+  });
+};
+
+exports.create_a_user = function(req, res) {
+  var new_user = new User(req.body);
+  new_user.save(function(err, user) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(user);
+    }
+  });
+};
 
 exports.list_all_tasks = function(req, res) {
   Task.find({}, function(err, task) {
@@ -20,10 +44,10 @@ exports.create_a_task = function(req, res) {
     } else {
       res.json(task);
     }
-  })
+  });
 };
 
-exports.create_a_task = function(req, res) {
+exports.get_a_task = function(req, res) {
   Task.findById(req.params.taskId, function(err, task) {
     if (err) {
       res.send(err);
@@ -31,6 +55,10 @@ exports.create_a_task = function(req, res) {
       res.json(task);
     }
   });
+};
+
+exports.get_current_time = function(req, res) {
+  res.json(new Date());
 };
 
 exports.update_a_task = function (req, res) {
