@@ -18,4 +18,9 @@ module.exports = function(app) {
     .get(todoList.list_all_users)
     .post(todoList.create_a_user);
 
+  app.route('/api/1.0/users/:userId')
+    .get(todoList.get_a_user)
+    .put(todoList.update_a_user)
+    .delete(todoList.delete_a_user);
+
 };
