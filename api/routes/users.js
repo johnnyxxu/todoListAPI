@@ -1,9 +1,15 @@
-// users routes 
+// users routes
 
 const router = require('express').Router()
 const User = require('../models/user')
 
 module.exports = router
+
+router.get('/current-time', (req, res, next) => {
+  res.status(200).json({
+    current_time: new Date()
+  });
+});
 
 router.get('/', (req, res, next) => {
   User.find({}, function(err, user) {
@@ -13,10 +19,6 @@ router.get('/', (req, res, next) => {
       res.json(user);
     }
   });
-});
-
-router.get('/current-time', (req, res, next) => {
-  res.json(new Date());
 });
 
 router.post('/', (req, res, next) => {
