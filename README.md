@@ -4,11 +4,11 @@ This is a simple RESTful API demo
 
 Install
 -------
-You will need the following for this demo.
-    npm install nodemon
-    npm install mongod
-    npm install mongoose
-    
+You will need the following for this demo.<br/>
+    npm install nodemon<br/>
+    npm install mongod<br/>
+    npm install mongoose<br/>
+
 
 Run
 ---
