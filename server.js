@@ -1,28 +1,31 @@
-var express = require('express'),
-  app = express(),
+'use strict'
+const express = require('express');
+const mongoose = require('mongoose');
+const API_VERSION = '1.0';
+
+var app = express(),
   port = process.env.PORT || 3000;
-var mongoose = require('mongoose');
-var Task = require('./api/models/task');
-var User = require('./api/models/user');
 var bodyParser = require('body-parser');
 
+
 // mongoose instance connection url connection
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Tododb');
+const db = mongoose.connection;
 
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+  app.use('/api/' + API_VERSION, require('./api/routes/api'))
 
-var routes = require('./api/routes/todoListRoutes'); //importing route
-routes(app); //register the route
+  app.use(function(req, res) {
+    res.status(404).send({
+      url: req.originalUrl + ' not found'
+    })
+  });
 
-app.use(function(req, res) {
-  res.status(404).send({
-    url: req.originalUrl + ' not found'
-  })
+  app.listen(port);
+  console.log('RESTful API server is listening on port :' + port);
 });
-
-app.listen(port);
-
-console.log(' todo list RESTful API server started on port :' + port);
